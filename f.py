@@ -1,7 +1,7 @@
 import pandas as pd
 
 def split_hours_for_two_teachers(df_current, df_past, discipline, load_type, groups):
-    # ... (ваша функция остается без изменений) ...
+
     key_cols = ['Дисциплина', 'Вид нагрузки', 'Группы']
     
     mask_past = (
@@ -45,31 +45,28 @@ def split_hours_for_two_teachers(df_current, df_past, discipline, load_type, gro
                 df_current = df_current.drop(idx)
                 df_current = pd.concat([df_current, pd.DataFrame([row1, row2])], ignore_index=True)
                 
-                print(f"✅ Нагрузка по '{discipline}' ({load_type}, {groups}) успешно разделена.")
-                print(f"   Пропорция: {prop1:.2f} ({past_rows.iloc[0]['ФИО']}) к {prop2:.2f} ({past_rows.iloc[1]['ФИО']})")
+                print(f"Нагрузка по '{discipline}' ({load_type}, {groups}) успешно разделена.")
+                print(f"Пропорция: {prop1:.2f} ({past_rows.iloc[0]['ФИО']}) к {prop2:.2f} ({past_rows.iloc[1]['ФИО']})")
             else:
-                print(f"⚠️ Строка не найдена в текущем году.")
+                print(f"Строка не найдена в текущем году.")
         else:
-            print(f"⚠️ Сумма часов в прошлом году равна 0, деление невозможно.")
+            print(f"Сумма часов в прошлом году равна 0, деление невозможно.")
     else:
-        print(f"❌ Условие не выполнено: в прошлом году было не 2 преподавателя (найдено: {len(past_rows)}).")
+        print(f"Условие не выполнено: в прошлом году было не 2 преподавателя (найдено: {len(past_rows)}).")
         
     return df_current
 
 
-# === ГЛАВНЫЙ КОД - УБРАНЫ КОММЕНТАРИИ ===
+
 if __name__ == "__main__":
     try:
         # 1. Загружаем файлы
         print("Загрузка файлов...")
         df_past = pd.read_excel('Список 15вар - осень.xls')
         df_current = pd.read_excel('Список 15вар - весна.xls')
-        print("✅ Файлы загружены")
+        print("Файлы загружены")
         
-        # 2. Выберите конкретную дисциплину из ваших файлов
-        # Например, из файла "осень" я вижу:
-        # - "Техническое документоведение (ЕСКД, ЕСТПП, ЕСТД)" с ПЗ для Т1О-301Б-17
-        # - "История профессии" с ЛР для Т11О-101Б-19 (там 4 преподавателя)
+
         
         target_discipline = 'Техническое документоведение (ЕСКД, ЕСТПП, ЕСТД)'
         target_load_type = 'ПЗ'
@@ -88,9 +85,9 @@ if __name__ == "__main__":
         
         # 4. Сохраняем результат
         df_current.to_excel('Результат_задача_6.xlsx', index=False)
-        print("\n✅ Готово! Файл сохранен как 'Результат_задача_6.xlsx'")
+        print("\nГотово! Файл сохранен как 'Результат_задача_6.xlsx'")
         
     except Exception as e:
-        print(f"❌ Ошибка: {e}")
+        print(f"Ошибка: {e}")
         import traceback
         traceback.print_exc()
